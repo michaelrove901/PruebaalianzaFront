@@ -1,0 +1,69 @@
+<div class="container mt-4">
+    <h2>Lista de Clientes</h2>
+  
+    <div class="mb-3">
+      <button class="btn btn-primary" (click)="openCreateModal(createClientModal)">Crear Cliente</button>
+      <input class="form-control mt-2" type="text" placeholder="Buscar por keyClient" [(ngModel)]="searchKey" (ngModelChange)="searchByKey()">
+    </div>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Key Client</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{ client.keyClient }}</td>
+          <td>{{ client.name }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.phone }}</td>
+          <td>{{ client.startDate }}</td>
+          <td>{{ client.endDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #createClientModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Cliente</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="createClient(form.value)" #form="ngForm">
+          <div class="form-group">
+            <label for="keyClient">Key Client</label>
+            <input type="text" class="form-control" id="keyClient" name="keyClient" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" class="form-control" id="phone" name="phone" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" ngModel required>
+          </div>
+          <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+      </div>
+    </ng-template>
+  </div>
