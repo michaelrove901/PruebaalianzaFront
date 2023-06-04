@@ -4,17 +4,18 @@
     <div class="mb-3">
       <button class="btn btn-primary" (click)="openCreateModal(createClientModal)">Crear Cliente</button>
       <input class="form-control mt-2" type="text" placeholder="Buscar por keyClient" [(ngModel)]="searchKey" (ngModelChange)="searchByKey()">
+      <button (click)="exportClientsToExcel()">Exportar a Excel</button>
     </div>
   
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered" id="clientesTable">
       <thead>
         <tr>
-          <th>Key Client</th>
-          <th>Name</th>
+          <th>Key</th>
+          <th>Nombres</th>
           <th>Email</th>
-          <th>Phone</th>
-          <th>Start Date</th>
-          <th>End Date</th>
+          <th>Telefono</th>
+          <th>Fecha de inicio</th>
+          <th>Fecha de finalizaciòn</th>
         </tr>
       </thead>
       <tbody>
@@ -32,37 +33,40 @@
     <ng-template #createClientModal let-modal>
       <div class="modal-header">
         <h4 class="modal-title">Crear Cliente</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+        <button type="button" class="close btn btn-danger" aria-label="Close" (click)="modal.dismiss()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="createClient(form.value)" #form="ngForm">
+        <form [formGroup]="clientForm" (ngSubmit)="createClient()" novalidate>
+          <!-- ... -->
+        
           <div class="form-group">
-            <label for="keyClient">Key Client</label>
-            <input type="text" class="form-control" id="keyClient" name="keyClient" ngModel required>
+            <label for="keyClient">Key </label>
+            <input type="text" class="form-control" id="keyClient" formControlName="keyClient" required>
           </div>
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" ngModel required>
+            <label for="name">Nombres</label>
+            <input type="text" class="form-control" id="name" formControlName="name" required>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" ngModel required>
+            <input type="text" class="form-control" id="email" placeholder="123@example.com" formControlName="email" required>
           </div>
           <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" ngModel required>
+            <label for="phone">Telefono</label>
+            <input type="tel" class="form-control" id="phone" formControlName="phone" required>
           </div>
           <div class="form-group">
-            <label for="startDate">Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" ngModel required>
+            <label for="startDate">Fecha de inicio</label>
+            <input type="date" class="form-control" id="startDate" formControlName="startDate" required>
           </div>
           <div class="form-group">
-            <label for="endDate">End Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" ngModel required>
+            <label for="endDate">Fecha de finalizaciòn</label>
+            <input type="date" class="form-control" id="endDate" formControlName="endDate" required>
           </div>
-          <button type="submit" class="btn btn-primary">Crear</button>
+          <br>
+          <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">Crear</button>
         </form>
       </div>
     </ng-template>
